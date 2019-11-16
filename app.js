@@ -1,13 +1,17 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
-//Routes
+//EJS
+//app.use must be above app.set or layouts will not work
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
-//Index
+//Routes
 app.use('/', require('./routes/index'));
 
-//Users - allows use of login and register route preceded by users
+//allows use of login and register route preceded by users
 app.use('/users', require('./routes/users'));
 
 
