@@ -4,7 +4,14 @@ const app = express();
 
 //Routes
 
-app.use('/', require('./routes/index'))
+//Index
+app.use('/', require('./routes/index'));
+
+//Users - allows use of login and register route preceded by users
+app.use('/users', require('./routes/users'));
+
+
+
 
 const PORT  = process.env.PORT || 5000;
 
