@@ -1,7 +1,18 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
 
 const app = express();
+
+// DB Config
+const db = require('./config/keys').MongoURI;
+
+// Connect to Mongo
+// This returns a promise so needs .then and .catch
+// useNewURLParser is needed to avoid complaints in the console
+mongoose.connect(db, {useNewURLParser: true})
+    .then(() => console.log('MongoDB Connected...'))
+    .catch(err => console.log(err));
 
 //EJS
 //app.use must be above app.set or layouts will not work
