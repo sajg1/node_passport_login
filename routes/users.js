@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 // User
 const User = require('../models/User');
@@ -78,5 +79,18 @@ router.post('/register', (req, res) => {
         });
     }
 });
+
+// Login Handle
+// failureFlash message will be from whichever of the passport.js localstrategy errors.
+// A global variable for 'error' is setup in app.js and added to partial/mesaages.
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/users/login',
+        failureFlash: true
+    })(req, res, next);
+});
+
+
 
 module.exports = router;

@@ -8,6 +8,8 @@ const passport = require('passport');
 const app = express();
 
 // Passport Config
+// this line allows us to require the config file and pass it the parameter, passport.
+// ...so no need to require it in passport.js
 require('./config/passport')(passport);
 
 // DB Config
@@ -48,6 +50,7 @@ app.use(flash());
 app.use((req,res,next) => {
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
     next();
 });
 
