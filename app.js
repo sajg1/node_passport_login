@@ -3,8 +3,12 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
+
+// Passport Config
+require('./config/passport')(passport);
 
 // DB Config
 const db = require('./config/keys').MongoURI;
@@ -29,7 +33,12 @@ app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true,
-  }))
+  }));
+
+// Passport Middleware
+// must be after express sessions
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect Flash Middleware (gives us access to req.flash)
 app.use(flash());
